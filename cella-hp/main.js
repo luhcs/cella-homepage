@@ -39,41 +39,47 @@ map.flipY = false;
 
 var brain;
 const loader = new GLTFLoader();
-loader.load('scene.gltf', function( gltf ){
+loader.load('scene.gltf', 
+function (gltf) {
   brain = gltf.scene.children[0];
-  brain.material = new THREE.MeshMatcapMaterial({
+  brain.material = new THREE.MeshPhysicalMaterial({
     map: map,
-    normalMap: normalTexture,
-    normalMap: aoOcclusion,
-    
+    clearcoat: 1.0,
+    clearcoatMap: map,
+    clearcoatNormalMap: normalTexture,
+    clearcoatRoughnessMap: aoOcclusion,
+
+
 
   });
-  scene.add( brain );
+  scene.add(brain);
 
 },
-function ( xhr ) {
+  function (xhr) {
 
-  console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
 
-},
-
-
+  },
 
 
 
-// called when loading has errors
-function ( error ) {
 
-  console.log( 'An error happened' );
 
-}
+  // called when loading has errors
+  function (error) {
+
+    console.log('An error happened');
+
+  }
 );
 
 // Iluminação
 
 const pointLight = new THREE.PointLight(0xffffff);
 
-const hLight = new THREE.HemisphereLight(0xffffff, 0x000000, 10);
+const hLight = new THREE.HemisphereLight(0xffffff, 0x000000, 2);
+
+const aLight = new THREE.AmbientLight(0x404040);
 
 scene.add(hLight)
 
@@ -82,7 +88,7 @@ const gridHelper = new THREE.GridHelper(200, 50);
 
 // Camera
 
-camera.position.set(100,10,10);
+camera.position.set(100, 10, 10);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -96,9 +102,9 @@ scene.background = spaceTexture;
 function animate() {
   requestAnimationFrame(animate);
 
-  brain.rotation.x += 0;
-  brain.rotation.y += 0.005;
-  brain.rotation.z += 0;
+//  brain.rotation.x += 0;
+//  brain.rotation.y += 0.005;
+//  brain.rotation.z += 0;
 
   controls.update();
 
@@ -111,3 +117,7 @@ animate()
 
 
 renderer.render(scene, camera);
+
+$( document ).ready(function() {
+  console.log( "ready!" );
+});
