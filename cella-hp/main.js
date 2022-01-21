@@ -1,5 +1,5 @@
 import './style.css';
-import * as THREE from './node_modules/three';
+import * as THREE from "./node_modules/three"
 import { PointLightHelper } from './node_modules/three';
 import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js'
@@ -21,21 +21,21 @@ camera.position.setZ(30);
 renderer.render(scene, camera);
 
 // Texturas Cerebro
-var normalTexture = new THREE.TextureLoader().load('./assets/test_Normal.png');
+var normalTexture = new THREE.TextureLoader().load('./public/assets/test_Normal.png');
 normalTexture.anisotropy = renderer.getMaxAnisotropy();
 
 normalTexture.flipY = false;
 
-var aoOcclusion = new THREE.TextureLoader().load('./test_Occlusion.png');
+var aoOcclusion = new THREE.TextureLoader().load('./public/assets/test_Occlusion.png');
 aoOcclusion.anisotropy = renderer.getMaxAnisotropy();
 aoOcclusion.flipY = false;
-var aoMetalness = new THREE.TextureLoader().load('./assets/test_Metalness.png');
+var aoMetalness = new THREE.TextureLoader().load('./public/assets/test_Metalness.png');
 aoMetalness.anisotropy = renderer.getMaxAnisotropy();
 aoMetalness.flipY = false;
-var aoGloss = new THREE.TextureLoader().load('./assets/test_Gloss.png');
+var aoGloss = new THREE.TextureLoader().load('./public/assets/test_Gloss.png');
 aoGloss.anisotropy = renderer.getMaxAnisotropy();
 aoGloss.flipY = false;
-var map = new THREE.TextureLoader().load('./assets/test_Albedo.png');
+var map = new THREE.TextureLoader().load('./public/assets/test_Albedo.png');
 map.anisotropy = renderer.getMaxAnisotropy();
 
 map.flipY = false;
@@ -46,7 +46,7 @@ map.flipY = false;
 
 let brain;
 const loader = new GLTFLoader();
-loader.load('scene.gltf', 
+loader.load('./public/models/scene.gltf', 
 function (gltf) {
   brain = gltf.scene.children[0];
   brain.material = new THREE.MeshStandardMaterial({
@@ -61,9 +61,6 @@ function (gltf) {
     emissive: 0xffffff,
     emissiveIntensity: 0.01,
     
-
-
-
   });
   scene.add(brain);
 
@@ -95,11 +92,14 @@ pointLight.position.set(110,10,10)
 const pointLight2 = new THREE.PointLight(0xffffff);
 pointLight2.position.set(-110,10,10)
 
+const pointLight3 = new THREE.PointLight(0xffffff);
+pointLight3.position.set(0,110,10)
+
 const hLight = new THREE.HemisphereLight(0xffffff, 0x000000, 2);
 
 const aLight = new THREE.AmbientLight(0xffffff);
 
-scene.add(pointLight, pointLight2)
+scene.add(pointLight, pointLight2, pointLight3)
 
 const gridHelper = new THREE.GridHelper(200, 50);
 //scene.add(gridHelper)
@@ -112,18 +112,18 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 // Background
 
-const spaceTexture = new THREE.TextureLoader().load('space.jpg');
+const spaceTexture = new THREE.TextureLoader().load('./public/assets/space.jpg');
 scene.background = spaceTexture;
 
 // Animação
 
 function animate() {
   requestAnimationFrame(animate);
-/*
-  obj.rotation.x += 0;
-  obj.rotation.y += 0.005;
-  obj.rotation.z += 0;
-*/
+
+  brain.rotation.x += 0;
+  brain.rotation.y += 0.005;
+  brain.rotation.z += 0;
+
   controls.update();
 
   renderer.render(scene, camera);
