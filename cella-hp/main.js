@@ -118,6 +118,3 @@ animate()
 
 renderer.render(scene, camera);
 
-$( document ).ready(function() {
-  console.log( "ready!" );
-});
