@@ -93,7 +93,7 @@ scene.background = spaceTexture;
 
 // Animação
 
-/*function animate() {
+function animate() {
   requestAnimationFrame(animate);
 
   brain.rotation.x += 0;
@@ -106,7 +106,7 @@ scene.background = spaceTexture;
 
 }
 
-animate()*/
+animate()
 
 
 
