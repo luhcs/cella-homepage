@@ -1,8 +1,8 @@
 import './style.css';
-import * as THREE from 'three';
-import { PointLightHelper } from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import * as THREE from './node_modules/three';
+import { PointLightHelper } from './node_modules/three';
+import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js'
+import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js'
 
 const scene = new THREE.Scene();
 
@@ -20,15 +20,15 @@ camera.position.setZ(30);
 renderer.render(scene, camera);
 
 // Texturas Cerebro
-var normalTexture = new THREE.TextureLoader().load('.../.../assets/test_Normal.png');
+var normalTexture = new THREE.TextureLoader().load('./assets/test_Normal.png');
 
-var aoOcclusion = new THREE.TextureLoader().load('.../.../assets/test_Occlusion.png');
+var aoOcclusion = new THREE.TextureLoader().load('./assets/test_Occlusion.png');
 
-var aoMetalness = new THREE.TextureLoader().load('.../.../assets/test_Metalness.png');
+var aoMetalness = new THREE.TextureLoader().load('./assets/test_Metalness.png');
 
-var aoGloss = new THREE.TextureLoader().load('.../.../assets/test_Gloss.png')
+var aoGloss = new THREE.TextureLoader().load('./assets/test_Gloss.png');
 
-var map = new THREE.TextureLoader().load('.../.../assets/test_Albedo.png');
+var map = new THREE.TextureLoader().load('./assets/test_Albedo.png');
 
 map.encoding = THREE.sRGBEncoding;
 
@@ -39,7 +39,7 @@ map.flipY = false;
 
 let brain;
 const loader = new GLTFLoader();
-loader.load('.../.../scene.gltf', 
+loader.load('scene.gltf', 
 function (gltf) {
   brain = gltf.scene.children[0];
   brain.material = new THREE.MeshPhysicalMaterial({
@@ -94,7 +94,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 // Background
 
-const spaceTexture = new THREE.TextureLoader().load('.../.../space.jpg');
+const spaceTexture = new THREE.TextureLoader().load('space.jpg');
 scene.background = spaceTexture;
 
 // Animação
@@ -118,3 +118,4 @@ animate()
 
 renderer.render(scene, camera);
 
+export {}
