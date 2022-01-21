@@ -8,6 +8,7 @@ const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
 
+// Renderização
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
@@ -17,17 +18,49 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
 renderer.render(scene, camera);
+
+// Texturas Cerebro
+var normalTexture = new THREE.TextureLoader().load('./assets/test_Normal.png');
+
+var aoOcclusion = new THREE.TextureLoader().load('./assets/test_Occlusion.png');
+
+var aoMetalness = new THREE.TextureLoader().load('./assets/test_Metalness.png');
+
+var aoGloss = new THREE.TextureLoader().load('./assets/test_Gloss.png')
+
+var map = new THREE.TextureLoader().load('./assets/test_Albedo.png');
+
+map.encoding = THREE.sRGBEncoding;
+
+map.flipY = false;
+
+
+// Cerebro
+
 var brain;
 const loader = new GLTFLoader();
 loader.load('scene.gltf', function( gltf ){
-  brain = gltf.scene;
-  scene.add( gltf.scene );
+  brain = gltf.scene.children[0];
+  brain.material = new THREE.MeshMatcapMaterial({
+    map: map,
+    normalMap: normalTexture,
+    normalMap: aoOcclusion,
+    
+
+  });
+  scene.add( brain );
+
 },
 function ( xhr ) {
 
   console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
 
 },
+
+
+
+
+
 // called when loading has errors
 function ( error ) {
 
@@ -36,30 +69,29 @@ function ( error ) {
 }
 );
 
-
-/* const geometry = new THREE.TorusKnotGeometry(11, 3, 16, 100);
-const material = new THREE.MeshStandardMaterial({ color: 0xFF6347 });
-const knot = new THREE.Mesh(geometry, material);
-
-scene.add(knot) */
+// Iluminação
 
 const pointLight = new THREE.PointLight(0xffffff);
 
-const ambientLight = new THREE.HemisphereLight(0xffffff, 0x000000, 2);
+const hLight = new THREE.HemisphereLight(0xffffff, 0x000000, 10);
 
-scene.add(ambientLight, pointLight)
+scene.add(hLight)
 
 const gridHelper = new THREE.GridHelper(200, 50);
-scene.add(gridHelper)
+//scene.add(gridHelper)
 
-camera.position.set(0,0,10);
+// Camera
+
+camera.position.set(100,10,10);
 
 const controls = new OrbitControls(camera, renderer.domElement);
+
+// Background
 
 const spaceTexture = new THREE.TextureLoader().load('space.jpg');
 scene.background = spaceTexture;
 
-
+// Animação
 
 function animate() {
   requestAnimationFrame(animate);
