@@ -39,7 +39,7 @@ map.flipY = false;
 
 var brain;
 const loader = new GLTFLoader();
-loader.load('scene.gltf', 
+loader.load('./assets/scene.gltf', 
 function (gltf) {
   brain = gltf.scene.children[0];
   brain.material = new THREE.MeshPhysicalMaterial({
@@ -94,7 +94,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 // Background
 
-const spaceTexture = new THREE.TextureLoader().load('space.jpg');
+const spaceTexture = new THREE.TextureLoader().load('./assets/space.jpg');
 scene.background = spaceTexture;
 
 // Animação
