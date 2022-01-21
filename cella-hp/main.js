@@ -1,4 +1,4 @@
-import './style.css'
+import './style.css';
 import * as THREE from 'three';
 import { PointLightHelper } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
@@ -6,7 +6,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
 
 
 const renderer = new THREE.WebGLRenderer({
@@ -17,41 +17,60 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
 renderer.render(scene, camera);
+var brain;
+const loader = new GLTFLoader();
+loader.load('scene.gltf', function( gltf ){
+  brain = gltf.scene;
+  scene.add( gltf.scene );
+},
+function ( xhr ) {
+
+  console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+},
+// called when loading has errors
+function ( error ) {
+
+  console.log( 'An error happened' );
+
+}
+);
 
 
+/* const geometry = new THREE.TorusKnotGeometry(11, 3, 16, 100);
+const material = new THREE.MeshStandardMaterial({ color: 0xFF6347 });
+const knot = new THREE.Mesh(geometry, material);
 
-const geometry = new THREE.TorusKnotGeometry (11 , 3 , 16 , 100);
-const material = new THREE.MeshStandardMaterial ( { color: 0xFF6347 });
-const knot = new THREE.Mesh ( geometry, material );
+scene.add(knot) */
 
-scene.add(knot)
+const pointLight = new THREE.PointLight(0xffffff);
 
+const ambientLight = new THREE.HemisphereLight(0xffffff, 0x000000, 2);
 
-const pointLight = new THREE.PointLight (0xffffff);
-pointLight.position.set(5,5,5)
+scene.add(ambientLight, pointLight)
 
-const ambientLight = new THREE.AmbientLight (0xffffff);
-
-scene.add(pointLight, ambientLight)
-
-const lightHelper = new THREE.PointLightHelper(pointLight)
 const gridHelper = new THREE.GridHelper(200, 50);
-scene.add (lightHelper, gridHelper)
+scene.add(gridHelper)
+
+camera.position.set(0,0,10);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
 const spaceTexture = new THREE.TextureLoader().load('space.jpg');
 scene.background = spaceTexture;
-function animate() {  
-  requestAnimationFrame( animate );
 
-  knot.rotation.x += 0.01;
-  knot.rotation.y += 0.005;
-  knot.rotation.z += 0.02;
 
-controls.update();
 
-  renderer.render (scene , camera );
+function animate() {
+  requestAnimationFrame(animate);
+
+  brain.rotation.x += 0;
+  brain.rotation.y += 0.005;
+  brain.rotation.z += 0;
+
+  controls.update();
+
+  renderer.render(scene, camera);
 
 }
 
@@ -59,3 +78,4 @@ animate()
 
 
 
+renderer.render(scene, camera);
