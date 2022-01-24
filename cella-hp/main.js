@@ -20,21 +20,21 @@ camera.position.setZ(30);
 renderer.render(scene, camera);
 
 // Texturas Cerebro
-var normalTexture = new THREE.TextureLoader().load('./static/assets/test_Normal.png');
+var normalTexture = new THREE.TextureLoader().load('./assets/test_Normal.png');
 normalTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
 normalTexture.flipY = false;
 
-var aoOcclusion = new THREE.TextureLoader().load('./static/assets/test_Occlusion.png');
+var aoOcclusion = new THREE.TextureLoader().load('./assets/test_Occlusion.png');
 aoOcclusion.anisotropy = renderer.capabilities.getMaxAnisotropy();
 aoOcclusion.flipY = false;
-var aoMetalness = new THREE.TextureLoader().load('./static/assets/test_Metalness.png');
+var aoMetalness = new THREE.TextureLoader().load('./assets/test_Metalness.png');
 aoMetalness.anisotropy = renderer.capabilities.getMaxAnisotropy();
 aoMetalness.flipY = false;
-var aoGloss = new THREE.TextureLoader().load('./static/assets/test_Gloss.png');
+var aoGloss = new THREE.TextureLoader().load('./assets/test_Gloss.png');
 aoGloss.anisotropy = renderer.capabilities.getMaxAnisotropy();
 aoGloss.flipY = false;
-var map = new THREE.TextureLoader().load('./static/assets/test_Albedo.png');
+var map = new THREE.TextureLoader().load('./assets/test_Albedo.png');
 map.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
 map.flipY = false;
@@ -43,9 +43,9 @@ map.flipY = false;
 
 // Cerebro
 
-var brain;
+let brain;
 const loader = new THREE.GLTFLoader();
-loader.load('./static/models/scene.gltf', 
+loader.load('./models/scene.gltf', 
 function (gltf) {
   brain = gltf.scene.children[0];
   brain.material = new THREE.MeshStandardMaterial({
@@ -111,7 +111,7 @@ const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 // Background
 
-const spaceTexture = new THREE.TextureLoader().load('./static/assets/space.jpg');
+const spaceTexture = new THREE.TextureLoader().load('./assets/space.jpg');
 scene.background = spaceTexture;
 
 // Animação
@@ -119,7 +119,7 @@ scene.background = spaceTexture;
 function animate() {
   requestAnimationFrame(animate);
 
-  //brain.rotation.y += 0.005;
+  if(brain) brain.rotation.y += 0.005;
 
   controls.update();
 
