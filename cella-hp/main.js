@@ -1,8 +1,7 @@
-import './style.css';
-import * as THREE from "./node_modules/three/build/three.module.js"
-import { PointLightHelper } from './node_modules/three';
-import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js'
-import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js'
+//import './styles.css';
+//import * as THREE from "./node_modules/three/build/three.module.js"
+//import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js'
+//import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js'
 
 
 const scene = new THREE.Scene();
@@ -22,21 +21,21 @@ renderer.render(scene, camera);
 
 // Texturas Cerebro
 var normalTexture = new THREE.TextureLoader().load('./public/assets/test_Normal.png');
-normalTexture.anisotropy = renderer.getMaxAnisotropy();
+normalTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
 normalTexture.flipY = false;
 
 var aoOcclusion = new THREE.TextureLoader().load('./public/assets/test_Occlusion.png');
-aoOcclusion.anisotropy = renderer.getMaxAnisotropy();
+aoOcclusion.anisotropy = renderer.capabilities.getMaxAnisotropy();
 aoOcclusion.flipY = false;
 var aoMetalness = new THREE.TextureLoader().load('./public/assets/test_Metalness.png');
-aoMetalness.anisotropy = renderer.getMaxAnisotropy();
+aoMetalness.anisotropy = renderer.capabilities.getMaxAnisotropy();
 aoMetalness.flipY = false;
 var aoGloss = new THREE.TextureLoader().load('./public/assets/test_Gloss.png');
-aoGloss.anisotropy = renderer.getMaxAnisotropy();
+aoGloss.anisotropy = renderer.capabilities.getMaxAnisotropy();
 aoGloss.flipY = false;
 var map = new THREE.TextureLoader().load('./public/assets/test_Albedo.png');
-map.anisotropy = renderer.getMaxAnisotropy();
+map.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
 map.flipY = false;
 
@@ -44,8 +43,8 @@ map.flipY = false;
 
 // Cerebro
 
-let brain;
-const loader = new GLTFLoader();
+var brain;
+const loader = new THREE.GLTFLoader();
 loader.load('./public/models/scene.gltf', 
 function (gltf) {
   brain = gltf.scene.children[0];
@@ -108,7 +107,7 @@ const gridHelper = new THREE.GridHelper(200, 50);
 
 camera.position.set(100, 10, 10);
 
-const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 // Background
 
@@ -135,5 +134,3 @@ animate()
 
 
 renderer.render(scene, camera);
-
-export {}

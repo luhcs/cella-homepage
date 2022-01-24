@@ -6,6 +6,9 @@
     "build": "vite build",
     "preview": "vite preview"
   },
+  "keywords": [],
+  "author": "Lucas F. Gomes",
+  "license": "MIT",
   "devDependencies": {
     "vite": "^2.7.2"
   },
