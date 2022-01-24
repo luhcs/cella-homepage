@@ -129,6 +129,6 @@ function animate() {
 
 animate()
 
-
+document.body.appendChild(renderer.domElement);
 
 renderer.render(scene, camera);
