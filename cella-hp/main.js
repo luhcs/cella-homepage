@@ -119,9 +119,7 @@ scene.background = spaceTexture;
 function animate() {
   requestAnimationFrame(animate);
 
-  brain.rotation.x += 0;
-  brain.rotation.y += 0.005;
-  brain.rotation.z += 0;
+  //brain.rotation.y += 0.005;
 
   controls.update();
 
