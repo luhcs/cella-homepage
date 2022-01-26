@@ -1,7 +1,12 @@
 canvas {
+  width: 100vw;
+  height: 100vh;
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: -9999;
+  
 }
 
 body {
@@ -9,5 +14,115 @@ body {
   height: 100vh;
   margin: 0;
   background: black;
-  overflow: hidden;
+  overflow:hidden;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+.logo {
+  font-size: 24px;
+  color: rgb(85, 85, 85);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: -1px -1px 5px rgba(102, 102, 102, 0.884);
+
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  height: 8vh;
+  background-color: rgba(212, 212, 212, 0.884) ;
+  position: relative;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+}
+
+.nav-list li {
+  letter-spacing: 3px;
+  margin-left: 32px;
+}
+
+.mobile-menu {
+  display: none;
+  cursor: pointer;
+}
+
+.mobile-menu div {
+  width: 32px;
+  height: 2px;
+  background: rgb(87, 87, 87);
+  margin: 8px;
+  transition: 0.3s;
+  box-shadow:  0.5px 0.5px 3px black ;
+}
+
+@media (max-width: 999px) {
+  body {
+    overflow-x: hidden;
+  }
+  .nav-list {
+    position: absolute;
+    top: 8vh;
+    right: 0;
+    width: 50vw;
+    height: 92vh;
+    background-color: rgba(199, 199, 199, 0.5);
+    flex-direction: column;
+    align-items: center ;
+    justify-content: space-around;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in;
+  }
+  .nav-list li {
+    margin-left: 0;
+    opacity: 0;
+  }
+  .mobile-menu {
+    display: block;
+  }
+}
+
+.nav-list.active {
+  transform: translateX(0);
+}
+
+@keyframes navLinkFade {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.mobile-menu.active .line1 {
+  transform: rotate(-45deg) translate(-8px, 8px);
+}
+
+.mobile-menu.active .line2 {
+  opacity: 0;
+}
+
+.mobile-menu.active .line3 {
+  transform: rotate(45deg) translate(-5px, -7px);
 }

@@ -56,9 +56,9 @@ function (gltf) {
     aoMap: aoOcclusion,
     aoMapIntensity: 0.1,
     roughnessMap: aoGloss,
-    roughness: 0,
+    roughness: 0.09,
     emissive: 0xffffff,
-    emissiveIntensity: 0.01,
+    emissiveIntensity: 0.1,
     
   });
   scene.add(brain);
@@ -83,7 +83,12 @@ function (gltf) {
   
 );
 
+
 // Iluminação
+/*const dirLight = new THREE.DirectionalLight(0xffffff, 0.4);
+dirLight.position.set(0,1,0);
+dirLight.castShadow = true;
+scene.add(dirLight);*/
 
 const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(110,10,10)
@@ -112,7 +117,7 @@ const controls = new THREE.OrbitControls(camera, renderer.domElement);
 // Background
 
 const spaceTexture = new THREE.TextureLoader().load('./assets/space.jpg');
-scene.background = spaceTexture;
+scene.background = new THREE.Color(0xdddddd);
 
 // Animação
 
@@ -130,5 +135,14 @@ function animate() {
 animate()
 
 document.body.appendChild(renderer.domElement);
+
+window.addEventListener( 'resize', onWindowResize, false);
+
+function onWindowResize(){
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize( window.innerWidth, window.innerHeight);
+}
 
 renderer.render(scene, camera);
