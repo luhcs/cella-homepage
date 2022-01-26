@@ -58,7 +58,7 @@ function (gltf) {
     roughnessMap: aoGloss,
     roughness: 0.09,
     emissive: 0xffffff,
-    emissiveIntensity: 0.1,
+    emissiveIntensity: 0.01,
     
   });
   scene.add(brain);
