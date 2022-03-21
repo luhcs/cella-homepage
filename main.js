@@ -20,36 +20,36 @@ camera.position.setZ(30);
 renderer.render(scene, camera);
 
 // Texturas Cerebro
-var normalTexture = new THREE.TextureLoader().load('./assets/test_Normal.png');
+var normalTexture = new THREE.TextureLoader().load('./assets/m1_textures/test_Normal.png');
 normalTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
 normalTexture.flipY = false;
 
-var aoOcclusion = new THREE.TextureLoader().load('./assets/test_Occlusion.png');
+var aoOcclusion = new THREE.TextureLoader().load('./assets/m1_textures/test_Occlusion.png');
 aoOcclusion.anisotropy = renderer.capabilities.getMaxAnisotropy();
 aoOcclusion.flipY = false;
-var aoMetalness = new THREE.TextureLoader().load('./assets/test_Metalness.png');
+var aoMetalness = new THREE.TextureLoader().load('./assets/m1_textures/test_Metalness.png');
 aoMetalness.anisotropy = renderer.capabilities.getMaxAnisotropy();
 aoMetalness.flipY = false;
-var aoGloss = new THREE.TextureLoader().load('./assets/test_Gloss.png');
+var aoGloss = new THREE.TextureLoader().load('./assets/m1_textures/test_Gloss.png');
 aoGloss.anisotropy = renderer.capabilities.getMaxAnisotropy();
 aoGloss.flipY = false;
-var map = new THREE.TextureLoader().load('./assets/test_Albedo.png');
+var map = new THREE.TextureLoader().load('./assets/m1_textures/test_Albedo.png');
 map.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
 map.flipY = false;
 
 
 
-// Cerebro
+// Models
 
-let brain;
+let model1;
 const loader = new THREE.GLTFLoader();
-loader.load('./models/scene.gltf', 
+loader.load('./models/model1/scene.gltf', 
 function (gltf) {
-  brain = gltf.scene.children[0];
-  brain.material = new THREE.MeshStandardMaterial({
-    map: map,
+  model1 = gltf.scene.children[0];
+  model1.material = new THREE.MeshStandardMaterial({
+    //map: map,
     metalnessMap: aoMetalness,
     metalness: 1.0,
     normalMap: normalTexture,
@@ -59,15 +59,25 @@ function (gltf) {
     roughness: 0.09,
     emissive: 0xffffff,
     emissiveIntensity: 0.01,
+    wireframe: true,
     
   });
-  scene.add(brain);
+  scene.add(model1);
 
 },
   function (xhr) {
+    let status = xhr.loaded / xhr.total * 100;
+    let finished;
 
-    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-
+    console.log(status + '% loaded');
+    console.log(status)
+    
+    if (status == 100) {
+      $(window).on("load", function(){
+        $(".loader-wrapper").fadeOut(1200);
+        }
+      )};
+  
   },
 
 
@@ -82,6 +92,7 @@ function (gltf) {
   }
   
 );
+
 
 
 // Iluminação
@@ -124,7 +135,9 @@ scene.background = new THREE.Color(0xdddddd);
 function animate() {
   requestAnimationFrame(animate);
 
-  if(brain) brain.rotation.y += 0.005;
+  if(model1) model1.rotation.y += 0.005;
+ // if(model2) model1.rotation.y += 0.005;
+ // if(model3) model3.rotation.y += 0.005;
 
   controls.update();
 
