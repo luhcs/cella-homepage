@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "gh-pages": "^3.2.3",
-    "vite": "^2.7.2"
+    "vite": "^2.8.6"
   },
   "dependencies": {
     "esm": "^3.2.25",
