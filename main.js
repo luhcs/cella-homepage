@@ -66,13 +66,13 @@ function (gltf) {
 
 },
   function (xhr) {
-    let status = xhr.loaded / xhr.total * 100;
+    let status = Math.round(xhr.loaded / xhr.total) * 100;
     let finished;
 
     console.log(status + '% loaded');
     console.log(status)
     
-    if (status == 100) {
+    if (status >= 100) {
       $(window).on("load", function(){
         $(".loader-wrapper").fadeOut(1200);
         }
@@ -87,7 +87,7 @@ function (gltf) {
   // called when loading has errors
   function (error) {
 
-    console.log('An error happened');
+    console.log(error);
 
   }
   
