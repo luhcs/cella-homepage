@@ -12,10 +12,13 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
+  antialias: true,
 });
+renderer.autoClear = false;
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(30);
+renderer.setClearColor(0x000000, 0.0);
+camera.position.setZ(40);
 
 renderer.render(scene, camera);
 
@@ -49,28 +52,27 @@ loader.load('./models/model1/scene.gltf',
 function (gltf) {
   model1 = gltf.scene.children[0];
   model1.material = new THREE.MeshStandardMaterial({
-    //map: map,
+    map: map,
     metalnessMap: aoMetalness,
     metalness: 1.0,
     normalMap: normalTexture,
     aoMap: aoOcclusion,
     aoMapIntensity: 0.1,
     roughnessMap: aoGloss,
-    roughness: 0.09,
+    roughness: 0.1,
     emissive: 0xffffff,
     emissiveIntensity: 0.01,
     wireframe: true,
-    
   });
+  
   scene.add(model1);
 
 },
   function (xhr) {
-    let status = Math.round(xhr.loaded / xhr.total) * 100;
+    let status = Math.round(xhr.loaded / xhr.total * 100);
     let finished;
 
     console.log(status + '% loaded');
-    console.log(status)
     
     if (status >= 100) {
       $(window).on("load", function(){
@@ -79,9 +81,6 @@ function (gltf) {
       )};
   
   },
-
-
-
 
 
   // called when loading has errors
@@ -101,20 +100,21 @@ dirLight.position.set(0,1,0);
 dirLight.castShadow = true;
 scene.add(dirLight);*/
 
-const pointLight = new THREE.PointLight(0xffffff);
-pointLight.position.set(110,10,10)
+const pLight = new THREE.PointLight(0xffffff);
+pLight.position.set(110,10,10)
 
-const pointLight2 = new THREE.PointLight(0xffffff);
-pointLight2.position.set(-110,10,10)
+const pLight2 = new THREE.PointLight(0xffffff);
+pLight2.position.set(-110,10,10)
 
-const pointLight3 = new THREE.PointLight(0xffffff);
-pointLight3.position.set(0,110,10)
+const pLight3 = new THREE.PointLight(0xffffff);
+pLight3.position.set(0,110,10)
 
 const hLight = new THREE.HemisphereLight(0xffffff, 0x000000, 2);
 
 const aLight = new THREE.AmbientLight(0xffffff);
 
-scene.add(pointLight, pointLight2, pointLight3)
+
+scene.add(aLight)
 
 const gridHelper = new THREE.GridHelper(200, 50);
 //scene.add(gridHelper)
@@ -135,7 +135,7 @@ scene.background = new THREE.Color(0xdddddd);
 function animate() {
   requestAnimationFrame(animate);
 
-  if(model1) model1.rotation.y += 0.005;
+  if(model1) model1.rotation.y += 0.001;
  // if(model2) model1.rotation.y += 0.005;
  // if(model3) model3.rotation.y += 0.005;
 
